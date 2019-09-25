@@ -137,6 +137,9 @@ import java.sql.*;
 //    4.发送sql语句
 //        stmt.executeQuery() 执行查询操作，返回的查询结果就是ResultSet
 //        stmt.executeUpdate()执行更新操作（insert、update、delete等）
+//        stmt.execute()  可以执行所有语句，返回boolean类型
+//            对于update语句，getUpdateCount()获取影响的行数
+//            对于query语句，getResultSet()获取查询结果
 //    5.读取ResultSet
 //        String sql = “select * from user”;
 //        ResultSet rs = stmt.executeQuery(sql);
@@ -145,7 +148,8 @@ import java.sql.*;
 //            光标初始位置是第一行的上方
 //            next()使行光标向下移动一行（到了第一行）
 //            getXXX(int col)获取当前行某一列的数据，XXX指的是数据类型，如果无法确定数据类型，最好使用getObject(int col)
-//    6.关闭
+//            还可以通过列名获取数据 getInt(String columnName)，同列索引获取数据类似
+//    6.关闭  规范化代码
 //        与IO流一样，使用后的东西都需要关闭！关闭的顺序是先得到的后关闭，后得到的先关闭
 //        无论是否出现异常，都要执行关闭操作（规范化代码）
 //            rs.close();
@@ -158,6 +162,57 @@ import java.sql.*;
 //                2.单击 Modules -> Dependencies -> "+" -> "Jars or directories"
 //                3.选择硬盘上的jar包
 //                4.Apply -> OK
+//5.ResultSet之滚动结果集（了解）
+//    1.概述
+//        ResultSet表示结果集，它是一个二维的表格！ResultSet内部维护一个行光标（游标），ResultSet提供了一系列的方法来移动游标
+//        如果结果集是不可滚动的，就只能用next()来移动游标，对于滚动结果集，可以用下列方法判断和操作游标位置
+//    2.滚动结果集的操作方法
+//        void beforeFirst()：把光标放到第一行的前面，这也是光标默认的位置
+//        void afterLast()：把光标放到最后一行的后面
+//        boolean first()：把光标放到第一行的位置上，返回值表示调控光标是否成功
+//        boolean last()：把光标放到最后一行的位置上
+//        boolean isBeforeFirst()：当前光标位置是否在第一行前面
+//        boolean isAfterLast()：当前光标位置是否在最后一行的后面
+//        boolean isFirst()：当前光标位置是否在第一行上
+//        boolean isLast()：当前光标位置是否在最后一行上
+//        boolean previous()：把光标向上挪一行
+//        boolean next()：把光标向下挪一行
+//        boolean relative(int row)：相对位移，当row为正数时，表示向下移动row行，为负数时表示向上移动row行
+//        boolean absolute(int row)：绝对位移，把光标移动到指定的行上
+//        int getRow()：返回当前光标所有行
+//    3.如何生成滚动结果集
+//        con.createStatement(int resultSetType, int resultSetConcurrency)
+//        1.resultSetType:
+//            ResultSet.TYPE_FORWARD_ONLY：不滚动结果集type_forward_only
+//            ResultSet.TYPE_SCROLL_INSENSITIVE：滚动结果集，但结果集数据不会再跟随数据库而变化type_scroll_insensitive
+//            ResultSet.TYPE_SCROLL_SENSITIVE：滚动结果集，但结果集数据不会再跟随数据库而变化type_scroll_sensitive
+//        2.resultSetConcurrency
+//            CONCUR_READ_ONLY：结果集是只读的，不能通过修改结果集而反向影响数据库concur_read_only
+//            CONCUR_UPDATABLE：结果集是可更新的，对结果集的更新可以反向影响数据库concur_updatable
+//6.SQL注入（攻击）
+//    1.什么是sql注入
+//        用户输入的信息 和 后台预定义的sql语句拼接后形成最终的sql语句，就可能造成sql注入，产生意料之外的情况
+//        比如：
+//            String sql = "select * from user where name = '" + name + "' and password ='" + password + "'";
+//            rs = stmt.executeQuery(sql);
+//            假如用户输入的name = Admin' or 'a'='a，password = xxx' or 'a'='a  即使name,password都是错误的，也能登录
+//            因为语句变成了
+//                select * from user where name = 'Admin' or 'a'='a' and password = 'xxx' or 'a'='a'
+//            这样and连接的两个条件都是恒真
+//            类似的情况还会发生在其他语句中，只要采用了拼接用户输入的字符串
+//    2.怎么避免sql注入 使用PreparedStatement       绑定，传参，执行
+//        1.PreparedStatement 预编译声明       Connection的prepareStatement(String sql)创建时就与一条sql绑定，将sql的逻辑结构定死，只能给参数做填空
+//            1.Statement不进行预编译操作，所以执行语句的速度较快，但实际上，sql还是要经过编译才能被数据库执行，每执行一次Statement就要编译一次，然后加入数据库的执行计划中，
+//              而进行预编译之后，每次调用重复使用一个模版，只需要进行填空的操作，总的效率反而更高
+//            2.PreparedStatement是Statement的子接口，具有Statement的所有功能，可以用PreparedStatement代替Statement
+//            （但不是所有数据库都支持PreparedStatement，MySQL明确地说明了不支持PreparedStatement）
+//            3.进行预编译后，整个sql的结构定死
+//                String sql = "select * from user where name = ? and password = ?"
+//                PreparedStatement pstmt = con.prepareStatement(sql);
+//                pstmt.setString(1,name);
+//                pstmt.setString(2,password);//依次给?赋值,这样name和password都会整体作为参数传入sql中，不存在sql注入问题
+//                rs = pstmt.executeQuery();//PreparedStatement对象独有的executeQuery()方法是没有参数的，因为创建时就已经绑定了一条sql，不再需要传入sql
+//            4.综上，不管出于什么考虑，都应该使用PreparedStatement代替Statement
 public class AJDBC {
 
     public void jdbcDemo () {
@@ -166,12 +221,21 @@ public class AJDBC {
         ResultSet rs = null;
 
         try {
-            Class.forName("oracle.jdbc.driver.OracleDriver");
+            Class.forName("oracle.jdbc.driver.OracleDriver");   //ClassNotFoundException   驱动的jar包有问题
             String url = "jdbc:oracle:thin:@192.168.0.19:1521:orcl";
             con = DriverManager.getConnection(url, "bdcdj_huaian", "gtis");
-            stmt = con.createStatement();
-            String sql = "select * from bdc_xm";
-            rs = stmt.executeQuery(sql);
+            String sql = "select * from bdc_xm where proid != ?";
+//            stmt = con.createStatement();
+            //调用executeQuery(sql)
+//            rs = stmt.executeQuery(sql);
+            //调用execute()和getResultSet()
+//            stmt.execute(sql);
+//            rs = stmt.getResultSet();
+
+            //使用PreparedStatement
+            PreparedStatement pstmt = con.prepareStatement(sql);
+            pstmt.setString(1,"sada' and 'a' != 'a");
+            rs = pstmt.executeQuery();
             rs.next();
             System.out.println(rs.getString(1));
         } catch (Exception e) {
