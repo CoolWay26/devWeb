@@ -213,7 +213,7 @@ import java.sql.*;
 //                pstmt.setString(2,password);//依次给?赋值,这样name和password都会整体作为参数传入sql中，不存在sql注入问题
 //                rs = pstmt.executeQuery();//PreparedStatement对象独有的executeQuery()方法是没有参数的，因为创建时就已经绑定了一条sql，不再需要传入sql
 //            4.综上，不管出于什么考虑，都应该使用PreparedStatement代替Statement
-public class AJDBC {
+public class JDBCASummary {
 
     public void jdbcDemo () {
         Connection con = null;
