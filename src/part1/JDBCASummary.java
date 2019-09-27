@@ -250,10 +250,11 @@ public class JDBCASummary {
         }
     }
 
-    @Test
-    public void jdbcDemoTest () {
-        jdbcDemo();
-    }
+
+//    @Test
+//    public void jdbcDemoTest () {
+//        jdbcDemo();
+//    }
 }
 
 
