@@ -14,12 +14,19 @@
 //        1.使用ResourceBundle加载properties
 //            ResourceBundle bundle = ResourceBundle.getBundle("jdbc");
 //            driver = bundle.getString("jdbc.driver");
-//        2.通常配置只需要加载一次，因为重复加载也是一样的内容
+//            通常配置只需要加载一次，因为重复加载也是一样的内容
 //            定义成static，跟随类在static块中加载
+//        2.使用Properties对象加载配置文件        参考  https://blog.csdn.net/Coding__man/article/details/81118275
+//            ClassLoader classLoader = JDBCBUtils.class.getClassLoader();
+//            InputStream is = classLoader.getResourceAsStream("resources.jdbc");
+//            Properties properties = new Properties();
+//            properties.load(is);
 package part1;
 import org.junit.Test;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.*;
-import java.util.ResourceBundle;
+import java.util.Properties;
 
 public class JDBCBUtils {
     //查询功能工具类--方式一
@@ -77,11 +84,32 @@ public class JDBCBUtils {
     private static String password;
     //配置文件只需要被加载一次
     static {
-        ResourceBundle bundle = ResourceBundle.getBundle("resources.jdbc");
-        driver = bundle.getString("jdbc.driver");
-        url = bundle.getString("url");
-        username = bundle.getString("username");
-        password = bundle.getString("password");
+        //工具类--方法二  ResourceBundle
+//        ResourceBundle bundle = ResourceBundle.getBundle("resources.jdbc");
+//        driver = bundle.getString("driver");
+//        url = bundle.getString("url");
+//        username = bundle.getString("username");
+//        password = bundle.getString("password");
+
+        //工具类--方法三
+        try {
+            //通过当前类获取类加载器
+            ClassLoader classLoader = JDBCBUtils.class.getClassLoader();
+            //通过类加载器获得一个输入流，写绝对路径
+            InputStream is = classLoader.getResourceAsStream("resources/jdbc.properties");
+            //创建一个Properties对象
+            Properties properties = new Properties();
+            //加载输入流到Properties对象
+            properties.load(is);
+            //通过properties对象读取配置文件内容
+            driver = properties.getProperty("driver");
+            url = properties.getProperty("url");
+            username = properties.getProperty("username");
+            password = properties.getProperty("password");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
     public int updateDemo() {
         int resNum = 0;
