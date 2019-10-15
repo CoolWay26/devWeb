@@ -3,6 +3,7 @@ package test;
 import part1.JDBCCPool;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 
 public class TestJdbcPool {
     public static void main (String[] args) {
@@ -19,8 +20,15 @@ class TestThread extends Thread {
         Connection conn = JDBCCPool.getConnection();
         //使用
         System.out.println(Thread.currentThread() + ":" + conn.toString());
-        //释放
-        JDBCCPool.releaseConnection(conn);
+//        //释放
+//        JDBCCPool.releaseConnection(conn);
+        try {
+            //装饰者
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        ;
     }
 }
 //效果如下：
