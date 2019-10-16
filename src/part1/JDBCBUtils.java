@@ -96,7 +96,7 @@ public class JDBCBUtils {
             //通过当前类获取类加载器
             ClassLoader classLoader = JDBCBUtils.class.getClassLoader();
             //通过类加载器获得一个输入流，写绝对路径
-            InputStream is = classLoader.getResourceAsStream("resources/jdbc.properties");
+            InputStream is = classLoader.getResourceAsStream("resources/config/jdbc.properties");
             //创建一个Properties对象
             Properties properties = new Properties();
             //加载输入流到Properties对象
