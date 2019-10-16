@@ -54,7 +54,7 @@ public class JDBCBUtils {
         return res;
     }
 
-    private static void release(ResultSet rs, Statement stmt, Connection con) {
+    public static void release(ResultSet rs, Statement stmt, Connection con) {
         if (rs != null) {
             try {
                 rs.close();
