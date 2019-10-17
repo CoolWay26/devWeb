@@ -126,7 +126,7 @@ import java.sql.*;
 //            分为三部分   第一部分jdbc是固定的；第二部分是数据库名（mysql,oracle）；第三部分是数据库厂商规定的（IP+端口+database名）
 //            此外，还可以跟两个参数jdbc:mysql://localhost:3306/web?useUnicode=true&characterEncoding=UTF8
 //            useUnicode：指定这个连接数据库的过程中，使用的字节集是Unicode字节集
-//            characterEncoding：声明传输数据使用的字节集编码为UTF-8编码（mysql要写成UTF8而不是UTF-8）
+//            characterEncoding：声明传输数据使用的字节集编码为UTF-8编码（这个参数指的是你数据的编码，而不是数据库的编码）
 //                取数据：按数据库编码解码成字节码，按UTF-8编码传给程序
 //                存数据：按UTF-8解码成字节码，按数据库编码编码存入数据库中
 //            还有另一个不常用参数allowMultiQueries=true
