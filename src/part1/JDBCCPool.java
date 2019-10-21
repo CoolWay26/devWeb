@@ -5,7 +5,7 @@
 //    2.为什么用连接池   因为获取连接，释放资源非常消耗系统资源，使用连接池来共享Connection
 //    3.基本原理  从池中获取Connection，使用完后调用close()不是销毁Connection，而是归还到池中
 //                java提供了javax.sql.DataSource公共接口，厂商自行实现接口让程序能使用不同厂商的连接池
-//    4.常见连接池 DBCP,C3P0
+//    4.常见连接池 dbcp,C3P0
 //2.手写简单的自定义连接池
 //    1.思想    本来应该实现DataSource接口，但是这里只使用getConnection()，为了省去重写方法的麻烦，不实现DataSource
 //        1.创建一个容器，存放Connection

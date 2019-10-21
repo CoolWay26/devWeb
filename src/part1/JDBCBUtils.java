@@ -12,13 +12,13 @@
 //            通常不是用中文，否则需要转码
 //    2.如何加载配置文件
 //        1.使用ResourceBundle加载properties
-//            ResourceBundle bundle = ResourceBundle.getBundle("jdbc");
+//            ResourceBundle bundle = ResourceBundle.getBundle("resources.config.jdbc");    //路径从src开始写，不带后缀，分隔符为.或者/
 //            driver = bundle.getString("jdbc.driver");
 //            通常配置只需要加载一次，因为重复加载也是一样的内容
 //            定义成static，跟随类在static块中加载
-//        2.使用Properties对象加载配置文件        参考  https://blog.csdn.net/Coding__man/article/details/81118275
+//        2.使用ClassLoader + Properties对象加载配置文件        参考  https://blog.csdn.net/Coding__man/article/details/81118275
 //            ClassLoader classLoader = JDBCBUtils.class.getClassLoader();
-//            InputStream is = classLoader.getResourceAsStream("resources.jdbc");
+//            InputStream is = classLoader.getResourceAsStream("resources/jdbc.properties");    //从src下开始写路径，带后缀，分隔符为/
 //            Properties properties = new Properties();
 //            properties.load(is);
 package part1;
@@ -27,6 +27,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.sql.*;
 import java.util.Properties;
+import java.util.ResourceBundle;
 
 public class JDBCBUtils {
     //查询功能工具类--方式一
@@ -85,7 +86,7 @@ public class JDBCBUtils {
     //配置文件只需要被加载一次
     static {
         //工具类--方法二  ResourceBundle
-//        ResourceBundle bundle = ResourceBundle.getBundle("resources.jdbc");
+//        ResourceBundle bundle = ResourceBundle.getBundle("resources/config/jdbc");
 //        driver = bundle.getString("driver");
 //        url = bundle.getString("url");
 //        username = bundle.getString("username");
@@ -95,7 +96,7 @@ public class JDBCBUtils {
         try {
             //通过当前类获取类加载器
             ClassLoader classLoader = JDBCBUtils.class.getClassLoader();
-            //通过类加载器获得一个输入流，写绝对路径
+            //通过类加载器获得一个输入流，写绝对路径（带后缀）
             InputStream is = classLoader.getResourceAsStream("resources/config/jdbc.properties");
             //创建一个Properties对象
             Properties properties = new Properties();
