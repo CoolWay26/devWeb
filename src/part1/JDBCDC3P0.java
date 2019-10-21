@@ -1,9 +1,8 @@
 //1.JDBC
 //  C3P0连接池 重要的开源免费连接池
 //1.概述
-//    1.需要两个jar包
+//    1.jar包
 //        c3p0-版本.jar
-//        mchange-commons-java-版本
 //2.配置文件  可以用xml或properties配置     参考https://blog.csdn.net/caychen/article/details/79625411  https://baike.baidu.com/item/c3p0/3719378?fr=aladdin
 //    1.文件名固定 c3p0-config.xml
 //    2.假如不放在根目录下，那么在使用前要指定配置文件的目录
