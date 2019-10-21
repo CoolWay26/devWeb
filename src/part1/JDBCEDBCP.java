@@ -1,7 +1,7 @@
 //1.JDBC
 //     DBCP连接池
 //1.配置文件    参考  https://www.cnblogs.com/qlqwjy/p/8018741.html
-//    1.名称    *.properties
+//    1.名称    *.properties  不支持xml配置
 //    2.位置    任意
 //    3.内容    不支持中文
 //2.jar
