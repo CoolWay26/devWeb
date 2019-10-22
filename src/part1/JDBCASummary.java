@@ -222,9 +222,9 @@ public class JDBCASummary {
 
         try {
             Class.forName("oracle.jdbc.driver.OracleDriver");   //ClassNotFoundException   驱动的jar包有问题
-            String url = "jdbc:oracle:thin:@192.168.0.19:1521:orcl";
-            con = DriverManager.getConnection(url, "bdcdj_huaian", "gtis");
-            String sql = "select * from bdc_xm where proid != ?";
+            String url = "jdbc:oracle:thin:@127.0.0.1:1521:orcl";
+            con = DriverManager.getConnection(url, "stu", "stu");
+            String sql = "select * from test_user where tel != ?";
 //            stmt = con.createStatement();
             //调用executeQuery(sql)
 //            rs = stmt.executeQuery(sql);

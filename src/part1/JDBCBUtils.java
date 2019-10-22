@@ -38,9 +38,9 @@ public class JDBCBUtils {
         String res = "";
         try {
             Class.forName("oracle.jdbc.driver.OracleDriver");   //ClassNotFoundException   驱动的jar包有问题
-            String url = "jdbc:oracle:thin:@192.168.0.19:1521:orcl";
-            con = DriverManager.getConnection(url, "bdcdj_huaian", "gtis");
-            String sql = "select * from bdc_xm where proid != ?";
+            String url = "jdbc:oracle:thin:@127.0.0.1:1521:orcl";
+            con = DriverManager.getConnection(url, "stu", "stu");
+            String sql = "select * from test_user where tel != ?";
             PreparedStatement pstmt = con.prepareStatement(sql);
             pstmt.setString(1,"sada' and 'a' != 'a");
             rs = pstmt.executeQuery();
@@ -117,9 +117,9 @@ public class JDBCBUtils {
         try {
             Class.forName(driver);
             Connection con = DriverManager.getConnection(url, username, password);
-            String sql = "update bdc_xm set ybh = '1' where proid = ?";
+            String sql = "update test_user set tel = '110' where name = ?";
             PreparedStatement pstmt = con.prepareStatement(sql);
-            pstmt.setString(1, "05HH5421LRB4436O");
+            pstmt.setString(1, "王王");
             resNum = pstmt.executeUpdate();
             System.out.println(resNum);
         } catch (Exception e) {

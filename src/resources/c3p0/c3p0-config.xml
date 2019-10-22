@@ -3,10 +3,10 @@
 
   <default-config>
 	<!--必须配置-->
-	<property name="driverClass">oracle.jdbc.driver.OracleDriver</property>
-	<property name="jdbcUrl">jdbc:oracle:thin:@192.168.0.19:1521:orcl</property>
-	<property name="user">bdcdj_huaian</property>
-	<property name="password">gtis</property>
+	  <property name="driverClass">oracle.jdbc.driver.OracleDriver</property>
+	  <property name="jdbcUrl">jdbc:oracle:thin:@127.0.0.1:1521:orcl</property>
+	  <property name="user">stu</property>
+	  <property name="password">stu</property>
 
     <!--&lt;!&ndash;基本配置&ndash;&gt;-->
     <!--&lt;!&ndash;初始化连接数,Default: 3&ndash;&gt;-->
@@ -42,10 +42,9 @@
     <!--通过不同的name，给程序提供不同配置的连接池-->
   <named-config name="oracleTest">
     <property name="driverClass">oracle.jdbc.driver.OracleDriver</property>
-	<property name="jdbcUrl">jdbc:oracle:thin:@192.168.0.19:1521:orcl</property>
-	<property name="user">bdcdj_huaian</property>
-	<property name="password">gtis</property>
+	<property name="jdbcUrl">jdbc:oracle:thin:@127.0.0.1:1521:orcl</property>
+	<property name="user">stu</property>
+	<property name="password">stu</property>
   </named-config>
-  
 
 </c3p0-config>

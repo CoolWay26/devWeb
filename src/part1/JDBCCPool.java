@@ -43,9 +43,9 @@ public class JDBCCPool{
             //注册驱动
             Class.forName("oracle.jdbc.driver.OracleDriver");
             //获取连接
-            String url = "jdbc:oracle:thin:@192.168.0.19:1521:orcl";
+            String url = "jdbc:oracle:thin:@127.0.0.1:1521:orcl";
             for (int i = 0; i<3; i++) {
-                Connection connection = DriverManager.getConnection(url, "bdcdj_huaian", "gtis");
+                Connection connection = DriverManager.getConnection(url, "stu", "stu");
 //                //生产连接，添加Connection到连接池
 //                pool.add(connection);
                 //装饰者增强原本的Connection
