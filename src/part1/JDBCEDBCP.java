@@ -25,6 +25,14 @@ import java.util.Properties;
 public class JDBCEDBCP {
     private static DataSource dataSource;
     static {
+        //手动配置，不管怎么配置，加载配置都是用BasicDataSource
+//        BasicDataSource dataSource = new BasicDataSource();
+//        dataSource.setDriverClassName("oracle.jdbc.driver.OracleDriver");
+//        dataSource.setUrl("jdbc:oracle:thin:@127.0.0.1:1521:orcl");
+//        dataSource.setUsername("stu");
+//        dataSource.setPassword("stu");
+
+
         //加载配置文件
         ClassLoader classLoader = JDBCEDBCP.class.getClassLoader();
         InputStream is = classLoader.getResourceAsStream("resources/dbcp/jdbc.properties");
