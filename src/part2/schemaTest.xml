@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--声明这是个xml文件-->
+
+<!--要使用某个约束文件书写实例，要在符合约束文件的第一个标签上声明约束文件的名称空间，web-app是该名称空间的第一个标签，-->
+<!--并取别名test，既然是给引入的名称空间取别名，那么根节点web-app显然也要用别名编写，表示受该约束文件的约束，但要明白，-->
+<!--这一步只是为当前xml的标签所属的名称空间指定一个名称（默认或者别名），没有其他作用，尤其是不要认为是通过这一步引入了-->
+<!--该名称空间中的元素，解析器并不是通过此处声明查找元素及对应信息-->
+
+<!--xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"表示本xml文件将要引用符合W3C标准的xsd实例-->
+<!--xsi:schemaLocation用来引用xsd架构文档，成对的绑定目标名称空间和对应的xsd文件-->
+<!--相应的，还有针对没有名称空间的约束文件的noNamespaceSchemaLocation，直接引入xsd文件-->
+<test:web-app xmlns:test="http://www.example.org/web-app_2_5"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xsi:schemaLocation="http://www.example.org/web-app_2_5
+              http://www.example.org/web-app_2_5.xsd"
+               version="1.0">
+    <test:servlet>
+        <test:servlet-name></test:servlet-name>
+        <test:servlet-class></test:servlet-class>
+    </test:servlet>
+</test:web-app>
