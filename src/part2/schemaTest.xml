@@ -9,13 +9,13 @@
 <!--xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"表示本xml文件将要引用符合W3C标准的xsd实例-->
 <!--xsi:schemaLocation用来引用xsd架构文档，成对的绑定目标名称空间和对应的xsd文件-->
 <!--相应的，还有针对没有名称空间的约束文件的noNamespaceSchemaLocation，直接引入xsd文件-->
-<test:web-app xmlns:test="http://www.example.org/web-app_2_5"
+<web-app xmlns="http://www.example.org/web-app_2_5"
                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                xsi:schemaLocation="http://www.example.org/web-app_2_5
               http://www.example.org/web-app_2_5.xsd"
                version="1.0">
-    <test:servlet>
-        <test:servlet-name></test:servlet-name>
-        <test:servlet-class></test:servlet-class>
-    </test:servlet>
-</test:web-app>
+    <servlet>
+        <servlet-name>BmyServletImpl</servlet-name>
+        <servlet-class>part2.impl.BmyServletImpl</servlet-class>
+    </servlet>
+</web-app>
