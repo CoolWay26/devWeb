@@ -60,6 +60,7 @@ public class JDBCCPool{
     //获取连接的方法
     public static Connection getConnection() {
         Connection conn = null;
+        //池子中有连接就取出，没有就等待若干时间重复判断有无可用连接
         if (!pool.isEmpty()) {
             conn = pool.removeFirst();
             return conn;
@@ -73,7 +74,7 @@ public class JDBCCPool{
         }
     }
 
-    //归还连接的方法
+    //归还连接的方法，这里连接用完以后不需要关闭连接，放入连接池中即可
     public static void releaseConnection(Connection conn) {
         if (conn != null) {
             pool.add(conn);
@@ -93,7 +94,7 @@ class MyConnection implements Connection {
     //需要增强的方法
     @Override
     public void close() throws SQLException {
-        //这里一定要用this，因为连接池中要用的是装饰后的类对象
+        //这里一定add的this，因为连接池中要用的是装饰后的connection对象,this指的就是当前的MyConnetion对象
         this.pool.add(this);
     }
     //不需增强的方法，这也是装饰者的缺点，明明不需要增强，却还要重写
